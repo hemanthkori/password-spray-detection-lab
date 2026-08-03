@@ -1,0 +1,18 @@
+# Optional local testing stack.
+# This lab does not require Splunk to be installed to understand the detections,
+# but if you want to push the sample logs into a real Splunk instance:
+#   1. `docker compose up -d`
+#   2. Forward data/sample_4625.json to the heavy forwarder (or upload via Splunk Web)
+#   3. Run detections/splunk/password_spray.spl
+#
+# The image below is a placeholder for a Splunk forwarder; adjust to your license.
+version: "3.8"
+services:
+  splunk:
+    image: splunk/splunk:latest
+    environment:
+      SPLUNK_START_ARGS: --accept-license
+      SPLUNK_PASSWORD: "ChangeMe!123"
+    ports:
+      - "8000:8000"
+      - "9997:9997"
