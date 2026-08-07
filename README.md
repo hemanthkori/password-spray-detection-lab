@@ -1,27 +1,30 @@
 # Password Spray Detection Lab
 
-A self-contained, runnable lab for detecting **password-spray attacks** against Windows
-Active Directory environments. It ships with Sigma, Splunk (SPL), and Microsoft Sentinel (KQL)
-detections, a synthetic Windows Security log generator, and a Docker Compose stack so you can
-test the detections end-to-end without touching a production domain.
+A runnable lab for catching **password-spray attacks** against Windows Active Directory.
+No production domain needed. It ships with Sigma, Splunk (SPL), and Microsoft Sentinel (KQL)
+detections, a synthetic 4625 log generator, and a Docker Compose stack.
 
-## What is a password spray?
+This is one of three labs I built as proof I can do SOC detection work, not just talk about it.
+The other two are `vpn-anomaly-detection` and `splunk-detection-lab`.
 
-A password spray is a credential-based attack where the attacker tries a **small number of
-common passwords against many different accounts** (flipping the axis of a traditional
-brute-force: few passwords × many users, instead of many passwords × one user). The goal is to
-stay under per-account lockout thresholds and blend in with normal failed-logon noise.
+## What a password spray actually is
+
+A spray flips the brute-force axis. Instead of hammering one account with a thousand
+passwords, the attacker takes one or two common passwords and fires them at hundreds of
+accounts. The point is to stay under the per-account lockout limit and hide in the normal
+noise of failed logons.
 
 MITRE ATT&CK: [T1110.003 Brute Force: Password Spraying](https://attack.mitre.org/techniques/T1110/003/)
 
-## Why it matters for a SOC
+## Why SOC analysts care
 
-- A single account locking out is noisy and obvious. A spray spreads attempts across the whole
-  user base, so per-account failure counts stay low while the *source IP* failure count spikes.
-- The signal is **aggregation over a window**, not a single event. Good triage needs:
-  - failed logons (`4625`) grouped by **source IP / hostname**
-  - distinct **targeted accounts** per source
-  - time-window thresholds (e.g. > 10 distinct accounts in 10 minutes from one source)
+Locking out a single account is loud. A spray spreads the pain across the whole user base,
+so no individual account trips its lockout threshold, but the *source IP* lights up.
+
+The signal is aggregation over a window, not one event. You need:
+- failed logons (`4625`) grouped by **source IP / hostname**
+- distinct **targeted accounts** per source
+- a time-window threshold (I use > 10 distinct accounts in 10 minutes from one source)
 
 ## Repo layout
 
@@ -53,20 +56,27 @@ python3 -c "import yaml,sys; print('sigma ok' if yaml.safe_load(open('detections
 # 3. Drop the JSON into Splunk / Sentinel and run the matching detection
 ```
 
+The generator plants a spray from one IP (`203.0.113.45`) hitting 50 distinct accounts in
+about 8 minutes, plus background noise. If your detection doesn't surface that IP, it's wrong.
+
 ## Detection logic (all three engines)
 
-Flag a source when, within a 10-minute sliding window, it produces failed logons (`4625`) against
-**>= 10 distinct target accounts** from a single source IP/host. Tune the threshold to your
-environment — a helpdesk subnet will look spray-like if you set it too low.
+Flag a source when, within a 10-minute sliding window, it produces failed logons (`4625`)
+against **>= 10 distinct target accounts** from a single source IP/host. Tune the threshold
+to your environment. Set it too low and a helpdesk subnet looks like an attack.
 
 ## Tuning notes
 
-- **Service accounts / batch jobs** generate legit high-volume failures — allowlist them.
-- **VPN / NAT egress** collapses many users behind one IP — correlate with the VPN session log
-  (see the sibling `vpn-anomaly-detection` repo) before alerting.
-- **False positive:** a stray `4625` storm after a password change can mimic a spray. Require
-  distinct-account count, not raw failure count.
+- **Service accounts / batch jobs** generate legit high-volume failures. Allowlist them.
+- **VPN / NAT egress** collapses many users behind one IP. Correlate with the VPN session
+  log (see the sibling `vpn-anomaly-detection` repo) before you alert.
+- **False positive:** a stray `4625` storm after a company-wide password change mimics a
+  spray. Require distinct-account count, not raw failure count.
+
+## Visual
+
+See `architecture.svg` for how this lab fits the broader detection portfolio.
 
 ## Author
 
-Built as part of a SOC analyst home-lab portfolio. Maps to MITRE ATT&CK T1110.003.
+Hemanth Kori. Built as part of a SOC analyst home-lab portfolio. Maps to MITRE ATT&CK T1110.003.

@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 660" font-family="'JetBrains Mono', ui-monospace, monospace">
+  <defs>
+    <marker id="ah" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#64748b"/>
+    </marker>
+    <marker id="ahr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#fb7185"/>
+    </marker>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+
+  <rect width="100%" height="100%" fill="#020617"/>
+  <rect width="100%" height="100%" fill="url(#grid)"/>
+
+  <!-- Header -->
+  <circle cx="40" cy="38" r="6" fill="#22d3ee"/>
+  <text x="56" y="43" fill="#ffffff" font-size="20" font-weight="700">Detection Portfolio — how the three labs connect</text>
+  <text x="56" y="64" fill="#94a3b8" font-size="12">Synthetic logs in, portable detections out. Build proof, not just talk.</text>
+
+  <!-- ===== Log sources (top) ===== -->
+  <rect x="60" y="110" width="220" height="64" rx="6" fill="rgba(8,51,68,0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+  <text x="170" y="138" fill="#ffffff" font-size="13" font-weight="600" text-anchor="middle">Windows 4625 Generator</text>
+  <text x="170" y="158" fill="#94a3b8" font-size="10" text-anchor="middle">password-spray-detection-lab</text>
+
+  <rect x="390" y="110" width="220" height="64" rx="6" fill="rgba(8,51,68,0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+  <text x="500" y="138" fill="#ffffff" font-size="13" font-weight="600" text-anchor="middle">VPN Log Generator</text>
+  <text x="500" y="158" fill="#94a3b8" font-size="10" text-anchor="middle">vpn-anomaly-detection</text>
+
+  <!-- HEC ingest label -->
+  <text x="305" y="218" fill="#94a3b8" font-size="10" text-anchor="middle">HTTP Event Collector</text>
+
+  <!-- ===== Splunk hub ===== -->
+  <rect x="250" y="230" width="500" height="130" rx="10" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1.5"/>
+  <text x="500" y="262" fill="#ffffff" font-size="15" font-weight="700" text-anchor="middle">Splunk Detection Lab</text>
+  <text x="500" y="284" fill="#94a3b8" font-size="11" text-anchor="middle">Splunk Enterprise :8000 · HEC :8088 · props/transforms</text>
+  <text x="500" y="312" fill="#34d399" font-size="12" text-anchor="middle">6 SPL detections run here</text>
+  <text x="500" y="332" fill="#94a3b8" font-size="10" text-anchor="middle">password_spray · vpn_anomaly · impossible_travel</text>
+  <text x="500" y="348" fill="#94a3b8" font-size="10" text-anchor="middle">brute_force_single · after_hours_admin · suspicious_powershell</text>
+
+  <!-- arrows: sources -> splunk -->
+  <line x1="170" y1="174" x2="330" y2="230" stroke="#22d3ee" stroke-width="1.5" marker-end="url(#ah)"/>
+  <line x1="500" y1="174" x2="470" y2="230" stroke="#22d3ee" stroke-width="1.5" marker-end="url(#ah)"/>
+
+  <!-- ===== Detection-as-code row ===== -->
+  <text x="56" y="412" fill="#94a3b8" font-size="11" font-weight="600">Detection-as-code (portable, version-controlled)</text>
+
+  <rect x="60" y="424" width="180" height="64" rx="6" fill="rgba(30,41,59,0.5)" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="150" y="452" fill="#ffffff" font-size="12" font-weight="600" text-anchor="middle">Sigma</text>
+  <text x="150" y="470" fill="#94a3b8" font-size="10" text-anchor="middle">vendor-neutral YAML</text>
+
+  <rect x="300" y="424" width="180" height="64" rx="6" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1.5"/>
+  <text x="390" y="452" fill="#ffffff" font-size="12" font-weight="600" text-anchor="middle">Splunk SPL</text>
+  <text x="390" y="470" fill="#94a3b8" font-size="10" text-anchor="middle">runs in the SIEM</text>
+
+  <rect x="540" y="424" width="180" height="64" rx="6" fill="rgba(120,53,15,0.3)" stroke="#fbbf24" stroke-width="1.5"/>
+  <text x="630" y="452" fill="#ffffff" font-size="12" font-weight="600" text-anchor="middle">Sentinel KQL</text>
+  <text x="630" y="470" fill="#94a3b8" font-size="10" text-anchor="middle">cloud SIEM queries</text>
+
+  <!-- arrow splunk -> detection row (authored) -->
+  <line x1="390" y1="360" x2="390" y2="422" stroke="#34d399" stroke-width="1.5" marker-end="url(#ah)"/>
+
+  <!-- ===== GitHub output ===== -->
+  <rect x="780" y="230" width="180" height="130" rx="10" fill="rgba(30,41,59,0.5)" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="870" y="272" fill="#ffffff" font-size="13" font-weight="600" text-anchor="middle">GitHub</text>
+  <text x="870" y="294" fill="#94a3b8" font-size="10" text-anchor="middle">3 public repos</text>
+  <text x="870" y="316" fill="#94a3b8" font-size="10" text-anchor="middle">recruiter-facing</text>
+  <text x="870" y="338" fill="#94a3b8" font-size="10" text-anchor="middle">proof of skill</text>
+
+  <!-- arrows to github -->
+  <line x1="750" y1="295" x2="778" y2="295" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)"/>
+  <line x1="630" y1="456" x2="760" y2="350" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)"/>
+  <line x1="630" y1="456" x2="780" y2="300" stroke="#fbbf24" stroke-width="1.5" marker-end="url(#ah)"/>
+
+  <!-- ===== Correlation callout (security, rose dashed) ===== -->
+  <rect x="60" y="540" width="900" height="70" rx="8" fill="rgba(136,19,55,0.15)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="5,4"/>
+  <text x="80" y="568" fill="#fb7185" font-size="12" font-weight="700">Correlation = the real signal</text>
+  <text x="80" y="590" fill="#e2e8f0" font-size="11">A spray source IP (4625) that ALSO appears in the VPN feed as a successful tunnel is a high-confidence intrusion.</text>
+  <text x="80" y="606" fill="#94a3b8" font-size="10">Both labs feed the same Splunk. That cross-source match is what a Tier 1 analyst is paid to catch.</text>
+
+  <!-- Legend -->
+  <rect x="780" y="540" width="14" height="9" rx="2" fill="rgba(8,51,68,0.4)" stroke="#22d3ee" stroke-width="1"/>
+  <text x="800" y="549" fill="#94a3b8" font-size="9">Log source</text>
+  <rect x="780" y="556" width="14" height="9" rx="2" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1"/>
+  <text x="800" y="565" fill="#94a3b8" font-size="9">SIEM / detection</text>
+  <rect x="780" y="572" width="14" height="9" rx="2" fill="rgba(120,53,15,0.3)" stroke="#fbbf24" stroke-width="1"/>
+  <text x="800" y="581" fill="#94a3b8" font-size="9">Cloud SIEM</text>
+  <rect x="780" y="588" width="14" height="9" rx="2" fill="rgba(30,41,59,0.5)" stroke="#94a3b8" stroke-width="1"/>
+  <text x="800" y="597" fill="#94a3b8" font-size="9">Output / portable</text>
+  <line x1="780" y1="608" x2="794" y2="608" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="3,3"/>
+  <text x="800" y="611" fill="#94a3b8" font-size="9">Correlation</text>
+</svg>
